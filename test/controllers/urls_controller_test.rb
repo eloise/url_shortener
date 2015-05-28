@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UrlsControllerTest < ActionController::TestCase
   setup do
-    @url = urls(:one)
+    @url = FactoryGirl.create :url
   end
 
   test "should get index" do

@@ -41,7 +41,7 @@ class UrlsController < ApplicationController
   # PATCH/PUT /urls/1.json
   def update
     respond_to do |format|
-      if @url.update(url_params)
+      if @url.update_attributes(url_params)
         format.html { redirect_to @url, notice: 'Url was successfully updated.' }
         format.json { render :show, status: :ok, location: @url }
       else
