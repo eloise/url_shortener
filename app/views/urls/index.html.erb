@@ -16,7 +16,7 @@
   <tbody>
     <% @urls.each do |url| %>
       <tr>
-        <td><%= url.short %></td>
+        <td><%= url.complete_short_url request.protocol, request.host_with_port %></td>
         <td><%= url.long %></td>
         <td><%= url.visit_counter %></td>
         <td><%= url.user_id %></td>

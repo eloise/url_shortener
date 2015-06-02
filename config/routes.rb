@@ -1,9 +1,17 @@
 Rails.application.routes.draw do
+
+
   resources :users
 
-  resources :urls
+  resources :urls do
+    member do
+      get 'short'
+    end
+  end
   
-  resource :welcome
+  get '/' => 'welcome#index', as: :welcome
+  get ':short' => 'urls#short'
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

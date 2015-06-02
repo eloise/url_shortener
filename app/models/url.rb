@@ -1,7 +1,6 @@
 class Url
   include MongoMapper::Document
   
-  URL_BEGIN = "http://abc.ez/"
   LENGTH = 7
 
   key :short, String
@@ -10,6 +9,10 @@ class Url
   key :user_id, ObjectId
   
   belongs_to :user
+  
+  def complete_short_url(protocol, host)
+    protocol + host + "/" + self.short  
+  end
   
   def self.shortener
     begin

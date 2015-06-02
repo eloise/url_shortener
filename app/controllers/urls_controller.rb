@@ -1,6 +1,22 @@
 class UrlsController < ApplicationController
   before_action :set_url, only: [:show, :edit, :update, :destroy]
 
+  # GET urls/1d3tf34/short
+  def short
+    url = Url.where(short: params[:short]).first
+    unless url.nil?
+      url.increment(visit_counter: 1)
+      respond_to do |format|
+        format.html { redirect_to url.long }
+      end
+    else
+      respond_to do |format|
+        url_requested = "#{request.protocol}#{request.host_with_port}/#{params[:short]}"
+        format.html { redirect_to welcome_path, notice: "Requested url #{url_requested} does not exists." }
+      end
+    end  
+  end
+  
   # GET /urls
   # GET /urls.json
   def index
@@ -10,10 +26,6 @@ class UrlsController < ApplicationController
   # GET /urls/1
   # GET /urls/1.json
   def show
-    @url.increment(visit_counter: 1)
-    respond_to do |format|
-      format.html { redirect_to @url.long }
-    end
   end
 
   # GET /urls/new
@@ -33,7 +45,7 @@ class UrlsController < ApplicationController
     
     respond_to do |format|
       if @url.save
-        format.html { redirect_to urls_url }
+        format.html { redirect_to urls_url, notice: 'Url was successfully created.' }
         format.json { render :show, status: :created, location: @url }
       else
         format.html { render :new }
