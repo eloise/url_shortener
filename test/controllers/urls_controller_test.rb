@@ -16,8 +16,13 @@ class UrlsControllerTest < ActionController::TestCase
     get :show, id: @url
     assert_redirected_to @url.long
   end
-
-
+  
+  test "should count calls for short url" do
+    assert_difference "@url.reload.visit_counter", 1 do
+      get :show, id: @url
+    end
+  end
+  
   test "should get index" do
     get :index
     assert_response :success
@@ -34,7 +39,7 @@ class UrlsControllerTest < ActionController::TestCase
       post :create, url: { long: @url.long, short: @url.short, user_id: @url.user_id, visit_counter: @url.visit_counter }
     end
 
-    assert_redirected_to url_path(assigns(:url))
+    assert_redirected_to urls_path()
   end
   
   test "should get edit" do

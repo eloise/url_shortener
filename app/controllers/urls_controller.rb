@@ -10,6 +10,7 @@ class UrlsController < ApplicationController
   # GET /urls/1
   # GET /urls/1.json
   def show
+    @url.increment(visit_counter: 1)
     respond_to do |format|
       format.html { redirect_to @url.long }
     end
@@ -32,7 +33,7 @@ class UrlsController < ApplicationController
     
     respond_to do |format|
       if @url.save
-        format.html { redirect_to @url, notice: 'Url was successfully created.' }
+        format.html { redirect_to urls_url }
         format.json { render :show, status: :created, location: @url }
       else
         format.html { render :new }
