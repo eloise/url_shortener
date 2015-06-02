@@ -10,6 +10,9 @@ class UrlsController < ApplicationController
   # GET /urls/1
   # GET /urls/1.json
   def show
+    respond_to do |format|
+      format.html { redirect_to @url.long }
+    end
   end
 
   # GET /urls/new
@@ -25,7 +28,8 @@ class UrlsController < ApplicationController
   # POST /urls.json
   def create
     @url = Url.new(url_params)
-
+    @url.short = Url.shortener
+    
     respond_to do |format|
       if @url.save
         format.html { redirect_to @url, notice: 'Url was successfully created.' }

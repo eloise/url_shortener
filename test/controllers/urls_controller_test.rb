@@ -5,6 +5,19 @@ class UrlsControllerTest < ActionController::TestCase
     @url = FactoryGirl.create :url
   end
 
+  test "should add short url when saving" do
+    assert_difference('Url.count') do
+      post :create, url: { long: @url.long }
+    end
+    assert Url.last.short
+  end
+  
+  test "should redirect to long url when get is called" do
+    get :show, id: @url
+    assert_redirected_to @url.long
+  end
+
+
   test "should get index" do
     get :index
     assert_response :success
@@ -23,12 +36,7 @@ class UrlsControllerTest < ActionController::TestCase
 
     assert_redirected_to url_path(assigns(:url))
   end
-
-  test "should show url" do
-    get :show, id: @url
-    assert_response :success
-  end
-
+  
   test "should get edit" do
     get :edit, id: @url
     assert_response :success
