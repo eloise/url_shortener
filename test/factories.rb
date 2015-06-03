@@ -6,8 +6,8 @@ FactoryGirl.define do
   end
 
   factory :url do
-    sequence(:short) { |n| "blabla/short{n}.com" }
-    sequence(:long) { |n| "blabla/long{n}.com" }
+    sequence(:short) { |n| "#{n}" }
+    sequence(:long) { |n| "blabla/long#{n}.com" }
     visit_counter 0
     association :user, factory: :user
   end

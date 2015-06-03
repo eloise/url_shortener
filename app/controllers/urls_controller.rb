@@ -4,7 +4,7 @@ class UrlsController < ApplicationController
   # GET urls/1d3tf34/short
   def short
     url = Url.where(short: params[:short]).first
-    unless url.nil?
+    unless url.nil?      
       url.increment(visit_counter: 1)
       respond_to do |format|
         format.html { redirect_to url.long }
